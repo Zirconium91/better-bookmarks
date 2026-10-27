@@ -20,7 +20,7 @@ Better Bookmarks is a personal start page for organising bookmarks into movable 
 ## Getting started
 
 1. Download and extract the project ZIP, or clone this repository.
-2. Keep index.html`, `styles.css`, and `app.js` together in a permanent folder.
+2. Keep `index.html`, `styles.css`, and `app.js` together in a permanent folder.
 3. Open `index.html` in a modern browser with JavaScript enabled.
 4. Click **+** to add your first bookmark.
 
