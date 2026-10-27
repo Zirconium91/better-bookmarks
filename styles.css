@@ -419,3 +419,17 @@
 
 /* Respect the saved search preference before the page is painted. */
 :root[data-show-search="false"] .search-container { display: none; }
+
+/* Reveal only the hovered bookmark's controls on mouse-driven devices.
+   Keep the space reserved to prevent links shifting as the pointer moves. */
+@media (hover: hover) and (pointer: fine) {
+  .link-row .row-action {
+    opacity: 0;
+    pointer-events: none;
+  }
+  .link-row:hover .row-action,
+  .link-row:focus-within .row-action {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
