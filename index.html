@@ -1,0 +1,107 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard</title>
+
+<link rel="stylesheet" href="styles.css">
+<script src="app.js"></script>
+</head>
+<body>
+
+<canvas id="waves" aria-hidden="true"></canvas>
+
+<header>
+  <h1>Dashboard</h1>
+  <div class="header-controls">
+    <button id="settings-btn" class="icon-btn" type="button" aria-label="Settings" title="Settings">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="12" cy="12" r="3"></circle>
+        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.09a1.65 1.65 0 0 0-1.51 1z"></path>
+      </svg>
+    </button>
+    <button id="add-btn" class="icon-btn" type="button" aria-label="Add Bookmark" title="Add Bookmark">+</button>
+    <button id="theme-toggle" class="icon-btn" type="button" aria-label="Toggle theme"></button>
+  </div>
+</header>
+
+<div class="search-container">
+  <form class="search-form" action="https://duckduckgo.com/" method="GET" target="_blank">
+    <div class="search-icon">
+      <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+        <circle cx="11" cy="11" r="8"></circle>
+        <line x1="21" y1="21" x2="16.65" y2="16.65"></line>
+      </svg>
+    </div>
+    <input type="text" name="q" id="web-search" placeholder="Search the web... (Press / to focus)" required autocomplete="off">
+  </form>
+</div>
+
+<main id="dashboard-grid"></main>
+<p id="status" role="status" aria-live="polite"></p>
+
+<!-- Add Bookmark Dialog -->
+<dialog id="bookmark-dialog">
+  <form id="bookmark-form" method="dialog">
+    <h2>New Bookmark</h2>
+    
+    <div class="form-group">
+      <label for="bm-name">Name</label>
+      <input type="text" id="bm-name" required placeholder="e.g. YouTube" autocomplete="off">
+    </div>
+    
+    <div class="form-group">
+      <label for="bm-url">URL</label>
+      <input type="url" id="bm-url" required placeholder="https://..." autocomplete="off">
+    </div>
+    
+    <div class="form-group">
+      <label for="bm-group">Category / Group</label>
+      <input type="text" id="bm-group" required placeholder="e.g. Media" list="group-list" autocomplete="off">
+      <datalist id="group-list"></datalist>
+    </div>
+
+    <div class="dialog-actions">
+      <button type="button" id="cancel-btn">Cancel</button>
+      <button type="submit">Add Bookmark</button>
+    </div>
+  </form>
+</dialog>
+
+<!-- Settings Dialog -->
+<dialog id="settings-dialog">
+  <h2>Settings</h2>
+  
+  <div class="toggle-row">
+    <label for="setting-blur">Disable Blur Effects</label>
+    <input type="checkbox" id="setting-blur" class="switch">
+  </div>
+  
+  <div class="form-group">
+    <label for="setting-speed">Wallpaper speed</label>
+    <select id="setting-speed"><option value="slow">Slow</option><option value="medium">Medium</option><option value="fast">Fast</option></select>
+  </div>
+
+  <div class="form-group" id="accent-settings">
+    <label>Accent Color</label>
+    <div class="accent-grid">
+      <button class="accent-swatch" data-color="blue" title="Blue"></button>
+      <button class="accent-swatch" data-color="teal" title="Teal"></button>
+      <button class="accent-swatch" data-color="green" title="Green"></button>
+      <button class="accent-swatch" data-color="yellow" title="Yellow"></button>
+      <button class="accent-swatch" data-color="orange" title="Orange"></button>
+      <button class="accent-swatch" data-color="red" title="Red"></button>
+      <button class="accent-swatch" data-color="pink" title="Pink"></button>
+      <button class="accent-swatch" data-color="purple" title="Purple"></button>
+      <button class="accent-swatch" data-color="slate" title="Slate"></button>
+    </div>
+  </div>
+
+  <div class="dialog-actions">
+    <button type="button" id="close-settings">Close</button>
+  </div>
+</dialog>
+
+</body>
+</html>

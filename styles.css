@@ -1,0 +1,418 @@
+/* --- GNOME Accent Colors (Dark Mode) --- */
+  :root[data-theme="dark"] {
+    --bg:          #242424;
+    --card:        #303030;
+    --card-border: rgba(0,0,0,0.36);
+    --text:        #ffffff;
+    --dim:         #9a9996;
+    --hover:       rgba(255,255,255,0.08);
+    --shadow:      0 4px 12px rgba(0,0,0,0.5);
+
+    --input-bg:    #1e1e1e;
+    --input-border: #444;
+    --btn-bg:      #3a3a3a;
+    --btn-hover:   #444;
+    --btn-destructive: #ff7b63;
+
+    --accent:      #78aeed; /* Default Blue */
+  }
+  :root[data-theme="dark"][data-accent="teal"]   { --accent: #5fb6c6; }
+  :root[data-theme="dark"][data-accent="green"]  { --accent: #74c77d; }
+  :root[data-theme="dark"][data-accent="yellow"] { --accent: #f5c211; }
+  :root[data-theme="dark"][data-accent="orange"] { --accent: #ff8c3d; }
+  :root[data-theme="dark"][data-accent="red"]    { --accent: #f66151; }
+  :root[data-theme="dark"][data-accent="pink"]   { --accent: #dc8add; }
+  :root[data-theme="dark"][data-accent="purple"] { --accent: #c061cb; }
+  :root[data-theme="dark"][data-accent="slate"]  { --accent: #99c1f1; }
+
+  /* --- GNOME Accent Colors (Light Mode) --- */
+  :root[data-theme="light"] {
+    --bg:          #f6f5f4;
+    --card:        #ffffff;
+    --card-border: rgba(0,0,0,0.12);
+    --text:        #2e3436;
+    --dim:         #77767b;
+    --hover:       rgba(0,0,0,0.06);
+    --shadow:      0 4px 12px rgba(0,0,0,0.2);
+
+    --input-bg:    #ffffff;
+    --input-border: #cdc7c2;
+    --btn-bg:      #e0dede;
+    --btn-hover:   #d0cece;
+    --btn-destructive: #e01b24;
+
+    --accent:      #3584e4; /* Default Blue */
+  }
+  :root[data-theme="light"][data-accent="teal"]   { --accent: #2190a4; }
+  :root[data-theme="light"][data-accent="green"]  { --accent: #3a944a; }
+  :root[data-theme="light"][data-accent="yellow"] { --accent: #e5a50a; }
+  :root[data-theme="light"][data-accent="orange"] { --accent: #ed5b00; }
+  :root[data-theme="light"][data-accent="red"]    { --accent: #e01b24; }
+  :root[data-theme="light"][data-accent="pink"]   { --accent: #c061cb; }
+  :root[data-theme="light"][data-accent="purple"] { --accent: #9141ac; }
+  :root[data-theme="light"][data-accent="slate"]  { --accent: #6f8396; }
+
+  * { box-sizing: border-box; }
+
+  html, body {
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    padding: 40px 24px;
+    font-family: "Adwaita Sans", Cantarell, system-ui, sans-serif;
+    background: var(--bg);
+    color: var(--text);
+    -webkit-font-smoothing: antialiased;
+    min-height: 100vh;
+    transition: background-color 150ms ease, color 150ms ease;
+  }
+
+  #waves {
+    position: fixed;
+    inset: 0;
+    z-index: -1;
+    pointer-events: none;
+    display: block;
+  }
+
+  /* --- Header --- */
+  header {
+    max-width: 1040px;
+    margin: 0 auto 16px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    background: var(--card);
+    padding: 12px 20px;
+    border-radius: 12px;
+    box-shadow: var(--shadow);
+    border: 1px solid var(--card-border);
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  h1 {
+    font-size: 1.35rem;
+    font-weight: 700;
+    margin: 0;
+  }
+
+  .header-controls {
+    display: flex;
+    gap: 8px;
+  }
+
+  .icon-btn {
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    border: 1px solid var(--card-border);
+    background: transparent;
+    color: var(--text);
+    font: inherit;
+    font-size: 1.2rem;
+    line-height: 1;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: background-color 100ms ease, border-color 150ms ease, color 150ms ease;
+  }
+  .icon-btn:hover  { background: var(--hover); }
+  .icon-btn:active { filter: brightness(0.95); }
+  .icon-btn:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+
+  #add-btn { font-size: 1.4rem; font-weight: 300; }
+  #settings-btn svg { width: 18px; height: 18px; }
+
+  /* --- Search Bar --- */
+  .search-container {
+    max-width: 1040px;
+    margin: 0 auto 24px;
+  }
+
+  .search-form {
+    display: flex;
+    align-items: center;
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 24px;
+    padding: 4px 8px 4px 20px;
+    box-shadow: var(--shadow);
+    transition: background-color 150ms ease, border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .search-form:focus-within {
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent), var(--shadow);
+  }
+
+  .search-icon {
+    color: var(--dim);
+    margin-right: 12px;
+    display: flex;
+    align-items: center;
+  }
+
+  .search-form input {
+    flex: 1;
+    background: transparent;
+    border: none;
+    color: var(--text);
+    font-family: inherit;
+    font-size: 1rem;
+    padding: 10px 0;
+    outline: none;
+  }
+
+  .search-form input::placeholder { color: var(--dim); }
+
+  /* --- Grid --- */
+  main {
+    max-width: 1040px;
+    margin: 0 auto;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 18px;
+  }
+
+  section {
+    background: var(--card);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 6px;
+    box-shadow: var(--shadow);
+    align-self: start;
+    transition: background-color 150ms ease, border-color 150ms ease;
+  }
+
+  h2 {
+    font-size: 0.75rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    color: var(--dim);
+    margin: 0;
+    padding: 10px 12px 6px;
+  }
+
+  .link-row {
+    display: flex;
+    align-items: center;
+    margin: 2px;
+    border-radius: 8px;
+    transition: background 100ms ease;
+  }
+
+  .link-row:hover { background: var(--hover); }
+
+  .link-row a {
+    flex: 1;
+    display: block;
+    padding: 8px 12px;
+    color: var(--text);
+    text-decoration: none;
+    font-size: 0.95rem;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+  }
+
+  /* --- Dialogs (GTK4 Style) --- */
+  dialog {
+    background: var(--card);
+    color: var(--text);
+    border: 1px solid var(--card-border);
+    border-radius: 12px;
+    padding: 24px;
+    box-shadow: 0 10px 30px rgba(0,0,0,0.5);
+    width: 100%;
+    max-width: 400px;
+    margin: auto;
+  }
+
+  dialog::backdrop {
+    background: rgba(0, 0, 0, 0.4);
+    backdrop-filter: blur(2px);
+    transition: backdrop-filter 150ms ease, background-color 150ms ease;
+  }
+
+  body.no-blur dialog::backdrop {
+    backdrop-filter: none;
+    background: rgba(0, 0, 0, 0.6);
+  }
+
+  dialog h2 {
+    font-size: 1.25rem;
+    text-transform: none;
+    letter-spacing: normal;
+    color: var(--text);
+    padding: 0 0 16px 0;
+    margin: 0;
+  }
+
+  .form-group {
+    margin-bottom: 16px;
+  }
+
+  .form-group label {
+    display: block;
+    font-size: 0.85rem;
+    font-weight: 600;
+    margin-bottom: 6px;
+    color: var(--dim);
+  }
+
+  .form-group input[type="text"],
+  .form-group input[type="url"] {
+    width: 100%;
+    padding: 10px 12px;
+    border-radius: 6px;
+    border: 1px solid var(--input-border);
+    background: var(--input-bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    transition: border-color 150ms ease, box-shadow 150ms ease;
+  }
+
+  .form-group input[type="text"]:focus,
+  .form-group input[type="url"]:focus {
+    outline: none;
+    border-color: var(--accent);
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  /* --- Settings Specific Styles --- */
+  .toggle-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+  }
+
+  .toggle-row label {
+    font-size: 0.95rem;
+    font-weight: 400;
+    color: var(--text);
+    cursor: pointer;
+    margin-bottom: 0;
+  }
+
+  /* GTK-style Switch */
+  .switch {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 44px;
+    height: 24px;
+    background: var(--input-border);
+    border-radius: 12px;
+    position: relative;
+    cursor: pointer;
+    outline: none;
+    transition: background 200ms;
+    flex-shrink: 0;
+  }
+
+  .switch::after {
+    content: '';
+    position: absolute;
+    top: 2px;
+    left: 2px;
+    width: 20px;
+    height: 20px;
+    background: #fff;
+    border-radius: 50%;
+    transition: transform 200ms;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.2);
+  }
+
+  .switch:checked { background: var(--accent); }
+  .switch:checked::after { transform: translateX(20px); }
+  .switch:focus-visible { box-shadow: 0 0 0 2px var(--accent); }
+
+  select { width: 100%; padding: 10px; border-radius: 6px; background: var(--input-bg); color: var(--text); border: 1px solid var(--input-border); font: inherit; }
+  .section-heading { display: flex; align-items: center; }
+  .section-heading h2 { flex: 1; min-width: 0; overflow-wrap: anywhere; cursor: grab; }
+  .section-heading button { padding: 6px; }
+  .row-action { background: transparent; border: 0; color: var(--dim); border-radius: 6px; padding: 8px; cursor: pointer; }
+  .row-action:hover { background: var(--hover); color: var(--text); }
+  .row-action:focus-visible { outline: 2px solid var(--accent); }
+  .row-action:disabled { opacity: .3; cursor: default; }
+  .link-row a { min-width: 0; }
+  .dragging { opacity: .5; }
+  .drop-target { outline: 2px solid var(--accent); }
+  #status { max-width: 1040px; margin: 12px auto; color: var(--dim); }
+  #status:empty { display: none; }
+  @media (max-width: 400px) { body { padding: 20px 12px; } main { grid-template-columns: minmax(0, 1fr); } header { padding: 12px; } }
+
+  /* Color Swatches */
+  .accent-grid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px;
+    margin-top: 8px;
+  }
+  .accent-swatch {
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    background-color: var(--swatch-color);
+    border: none;
+    cursor: pointer;
+    padding: 0;
+    outline: none;
+    transition: transform 100ms ease, box-shadow 100ms ease;
+  }
+  .accent-swatch:hover { transform: scale(1.15); }
+  .accent-swatch.active {
+    box-shadow: 0 0 0 2px var(--card), 0 0 0 4px var(--swatch-color);
+  }
+  .accent-swatch:focus-visible {
+    box-shadow: 0 0 0 2px var(--accent);
+  }
+
+  .dialog-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+    margin-top: 24px;
+  }
+
+  .dialog-actions button {
+    padding: 8px 16px;
+    border-radius: 6px;
+    border: 1px solid var(--card-border);
+    background: var(--btn-bg);
+    color: var(--text);
+    font-family: inherit;
+    font-size: 0.95rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 100ms ease;
+  }
+
+  .dialog-actions button:hover { background: var(--btn-hover); }
+  .dialog-actions button[type="submit"] {
+    background: var(--accent);
+    color: #fff;
+    border-color: transparent;
+  }
+  .dialog-actions button[type="submit"]:hover { filter: brightness(1.1); }
+
+#accent-settings { margin-bottom: 0; }
+.accent-swatch[data-color="blue"] { --swatch-color: #3584e4; }
+.accent-swatch[data-color="teal"] { --swatch-color: #2190a4; }
+.accent-swatch[data-color="green"] { --swatch-color: #3a944a; }
+.accent-swatch[data-color="yellow"] { --swatch-color: #e5a50a; }
+.accent-swatch[data-color="orange"] { --swatch-color: #ed5b00; }
+.accent-swatch[data-color="red"] { --swatch-color: #e01b24; }
+.accent-swatch[data-color="pink"] { --swatch-color: #c061cb; }
+.accent-swatch[data-color="purple"] { --swatch-color: #9141ac; }
+.accent-swatch[data-color="slate"] { --swatch-color: #6f8396; }
+
