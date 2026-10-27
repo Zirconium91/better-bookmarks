@@ -17,7 +17,6 @@ Better Bookmarks is a personal start page for organising bookmarks into movable 
 - **Keyboard shortcut:** press `/` or `Ctrl+K` outside an input or dialog to focus search when the search bar is enabled.
 - **Reduced-motion support:** the wallpaper stays still when your system requests reduced motion.
 
-
 ## Getting started
 
 1. Download and extract the project ZIP, or clone this repository.
