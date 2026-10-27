@@ -416,3 +416,6 @@
 .accent-swatch[data-color="purple"] { --swatch-color: #9141ac; }
 .accent-swatch[data-color="slate"] { --swatch-color: #6f8396; }
 
+
+/* Respect the saved search preference before the page is painted. */
+:root[data-show-search="false"] .search-container { display: none; }
