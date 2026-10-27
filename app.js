@@ -11,6 +11,7 @@
       if (savedSettings) {
         var s = JSON.parse(savedSettings);
         if (s.accent) document.documentElement.setAttribute('data-accent', s.accent);
+        document.documentElement.dataset.showSearch = s.showSearch !== false;
       }
     } catch (e) {
       document.documentElement.dataset.theme = 'dark';
@@ -22,6 +23,7 @@ document.addEventListener("DOMContentLoaded", () => {
 /* ---- Global Settings State ---- */
   let settings = {
     noBlur: false,
+    showSearch: true,
     waveSpeed: 'medium',
     accent: 'blue'
   };
@@ -32,6 +34,8 @@ document.addEventListener("DOMContentLoaded", () => {
       settings = { ...settings, ...JSON.parse(savedSettings) };
     }
   } catch (e) {}
+
+  settings.showSearch = settings.showSearch !== false;
 
   const speeds = { slow: 10, medium: 30, fast: 70 };
   if (!(settings.waveSpeed in speeds)) {
@@ -45,6 +49,9 @@ document.addEventListener("DOMContentLoaded", () => {
   }
 
   function applySettings() {
+    document.documentElement.dataset.showSearch = settings.showSearch;
+    document.querySelector('.search-container').hidden = !settings.showSearch;
+    document.getElementById('setting-search').checked = settings.showSearch;
     document.body.classList.toggle('no-blur', settings.noBlur);
     document.getElementById('setting-blur').checked = settings.noBlur;
     document.getElementById('setting-speed').value = settings.waveSpeed;
@@ -84,7 +91,7 @@ document.addEventListener("DOMContentLoaded", () => {
     var bookmarkDialog = document.getElementById('bookmark-dialog');
     var settingsDialog = document.getElementById('settings-dialog');
     
-    if (e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || bookmarkDialog.open || settingsDialog.open) {
+    if (!settings.showSearch || e.target.tagName === 'INPUT' || e.target.tagName === 'TEXTAREA' || bookmarkDialog.open || settingsDialog.open) {
       return;
     }
 
@@ -286,6 +293,12 @@ document.addEventListener("DOMContentLoaded", () => {
   });
 
   /* ---- Settings Inputs Logic ---- */
+  document.getElementById('setting-search').addEventListener('change', (e) => {
+    settings.showSearch = e.target.checked;
+    saveSettings();
+    applySettings();
+  });
+
   document.getElementById('setting-blur').addEventListener('change', (e) => {
     settings.noBlur = e.target.checked;
     saveSettings();
