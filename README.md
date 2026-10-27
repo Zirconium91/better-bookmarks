@@ -13,9 +13,10 @@ Better Bookmarks is a personal start page for organising bookmarks into movable 
 - **Light and dark themes:** switch themes and choose from nine accent colours.
 - **Animated wallpaper:** choose Slow, Medium, or Fast wave motion.
 - **Optional dialog blur:** disable the blur effect in Settings.
-- **Web search:** search DuckDuckGo directly from the dashboard.
-- **Keyboard shortcut:** press `/` or `Ctrl+K` outside an input or dialog to focus search.
+- **Web search:** search DuckDuckGo directly from the dashboard, or hide the search bar in Settings.
+- **Keyboard shortcut:** press `/` or `Ctrl+K` outside an input or dialog to focus search when the search bar is enabled.
 - **Reduced-motion support:** the wallpaper stays still when your system requests reduced motion.
+
 
 ## Getting started
 
@@ -39,6 +40,7 @@ You can bookmark the dashboard for quick access. It is a standalone page, not a 
 | Delete a bookmark | Click **×** beside the link and confirm. |
 | Reorder cards | Drag a card's heading onto another card, or use **← / →**. The arrows also work with touch and keyboard navigation. |
 | Change appearance | Open **Settings** to choose an accent, wallpaper speed, or blur preference. |
+| Show or hide search | Toggle **Show search bar** in **Settings**. The preference is saved automatically. |
 | Switch theme | Click the sun or moon button in the header. |
 | Search the web | Type in the search bar and press Enter. Results open in a new tab. |
 
@@ -52,7 +54,7 @@ Better Bookmarks stores data as JSON or text in the browser's `localStorage`:
 | --- | --- |
 | `dashboard-bookmarks-v2` | Bookmark names, URLs, and categories |
 | `dashboard-group-order-v1` | Section order |
-| `dashboard-settings-v1` | Wallpaper speed, accent colour, and blur preference |
+| `dashboard-settings-v1` | Wallpaper speed, accent colour, blur preference, and search-bar visibility |
 | `theme` | Light or dark theme |
 
 Bookmarks are **not embedded in the HTML file**. Publishing this source code to GitHub does not upload the bookmarks you added through the interface. A new user's dashboard starts empty.
@@ -91,3 +93,7 @@ Edit the relevant file in a text editor, then reload the HTML page in your brows
 For a fresh installation, open `index.html`. If you already have saved bookmarks, rename the downloaded `index.html` to your existing HTML filename and replace that file at its original location. Place `styles.css` and `app.js` beside it. The storage keys are unchanged. Keep a copy of the original file before replacing it. Opening the extracted project from a different location may use a different browser storage context.
 
 No build command or package manager is required.
+
+## AI assistance disclosure
+
+Better Bookmarks was developed with assistance from AI tools, including ChatGPT, for writing and refining code, troubleshooting, and preparing documentation. This disclosure is provided for transparency about the development process.
