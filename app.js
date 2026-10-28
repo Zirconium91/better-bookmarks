@@ -25,6 +25,7 @@ document.addEventListener("DOMContentLoaded", () => {
     noBlur: false,
     showSearch: true,
     waveSpeed: 'medium',
+    background: 'waves',
     accent: 'blue'
   };
 
@@ -36,6 +37,9 @@ document.addEventListener("DOMContentLoaded", () => {
   } catch (e) {}
 
   settings.showSearch = settings.showSearch !== false;
+
+  const backgrounds = ['waves', 'contours', 'lissajous', 'hexagons', 'interference'];
+  if (!backgrounds.includes(settings.background)) settings.background = 'waves';
 
   const speeds = { slow: 10, medium: 30, fast: 70 };
   if (!(settings.waveSpeed in speeds)) {
@@ -55,6 +59,7 @@ document.addEventListener("DOMContentLoaded", () => {
     document.body.classList.toggle('no-blur', settings.noBlur);
     document.getElementById('setting-blur').checked = settings.noBlur;
     document.getElementById('setting-speed').value = settings.waveSpeed;
+    document.getElementById('setting-background').value = settings.background;
     
     // Apply accent color
     document.documentElement.setAttribute('data-accent', settings.accent);
@@ -305,6 +310,12 @@ document.addEventListener("DOMContentLoaded", () => {
     applySettings();
   });
 
+  document.getElementById('setting-background').addEventListener('change', e => {
+    settings.background = e.target.value;
+    saveSettings();
+    window.dispatchEvent(new Event('wave-settings-change'));
+  });
+
   document.getElementById('setting-speed').addEventListener('change', (e) => {
     settings.waveSpeed = e.target.value;
     saveSettings();
@@ -321,7 +332,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   renderDashboard();
 
-  /* ---- Animated Psychedelic Wave Background ---- */
+  /* ---- Mathematical backgrounds: one shared animation loop ---- */
   (function () {
     var canvas = document.getElementById('waves');
     var ctx = canvas.getContext('2d');
@@ -359,15 +370,8 @@ document.addEventListener("DOMContentLoaded", () => {
       return `rgba(120,174,237,${alpha})`; // Fallback
     }
 
-    function drawFrame() {
-      ctx.fillStyle = bgColor;
-      ctx.fillRect(0, 0, w, h);
-
-      ctx.strokeStyle = lineColor;
+    function drawWaves() {
       ctx.lineWidth = 10;
-      ctx.lineCap = 'round';
-      ctx.lineJoin = 'round';
-
       const spacing = 45;
       const slope = 0.6;
       // Warp bounds: +/-60 horizontally, +/-120 vertically.
@@ -395,6 +399,108 @@ document.addEventListener("DOMContentLoaded", () => {
         }
         ctx.stroke();
       }
+    }
+
+    // Marching squares extracts real contour lines from a smooth scalar field.
+    // Grid resolution is bounded so large screens do not multiply the work.
+    function drawContours() {
+      const step = Math.max(28, Math.sqrt(w * h / 1800));
+      const cols = Math.ceil(w / step), rows = Math.ceil(h / step);
+      const values = new Float32Array((cols + 1) * (rows + 1));
+      for (let y = 0; y <= rows; y++) {
+        for (let x = 0; x <= cols; x++) {
+          const px = x * step, py = y * step;
+          values[y * (cols + 1) + x] =
+            Math.sin(px * .006 + t * .15) + Math.cos(py * .007 - t * .12) +
+            .6 * Math.sin((px + py) * .004 + t * .1);
+        }
+      }
+      ctx.beginPath();
+      for (let level = -2.1; level <= 2.1; level += .6) {
+        for (let y = 0; y < rows; y++) {
+          for (let x = 0; x < cols; x++) {
+            const i = y * (cols + 1) + x;
+            const v = [values[i], values[i + 1], values[i + cols + 2], values[i + cols + 1]];
+            const corners = [[x * step, y * step], [(x + 1) * step, y * step],
+              [(x + 1) * step, (y + 1) * step], [x * step, (y + 1) * step]];
+            const crossings = [];
+            for (let edge = 0; edge < 4; edge++) {
+              const next = (edge + 1) % 4;
+              if ((v[edge] < level) === (v[next] < level)) continue;
+              const f = (level - v[edge]) / (v[next] - v[edge]);
+              crossings.push([corners[edge][0] + f * (corners[next][0] - corners[edge][0]),
+                corners[edge][1] + f * (corners[next][1] - corners[edge][1])]);
+            }
+            // Resolve saddle cells using their centre value.
+            if (crossings.length === 4 && ((v.reduce((a, b) => a + b, 0) / 4 < level) !== (v[0] < level))) {
+              crossings.push(crossings.shift());
+            }
+            for (let k = 0; k + 1 < crossings.length; k += 2) {
+              ctx.moveTo(...crossings[k]); ctx.lineTo(...crossings[k + 1]);
+            }
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    function drawLissajous() {
+      ctx.beginPath();
+      const size = 250;
+      for (let cy = 110; cy < h + size; cy += size) {
+        for (let cx = 110; cx < w + size; cx += size) {
+          for (let i = 0; i <= 240; i++) {
+            const angle = i / 240 * Math.PI * 2;
+            const x = cx + 100 * Math.sin(3 * angle + t * .22);
+            const y = cy + 100 * Math.sin(2 * angle);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    function drawHexagons() {
+      const radius = 45, height = Math.sqrt(3) * radius;
+      for (let col = -1; col * radius * 1.5 < w + radius; col++) {
+        for (let row = -1; row * height < h + height; row++) {
+          const cx = col * radius * 1.5, cy = (row + (col & 1) * .5) * height;
+          ctx.globalAlpha = .45 + .55 * (.5 + .5 * Math.sin(cx * .008 + cy * .006 - t * .8));
+          ctx.beginPath();
+          for (let i = 0; i < 6; i++) {
+            const angle = i * Math.PI / 3;
+            const x = cx + radius * Math.cos(angle), y = cy + radius * Math.sin(angle);
+            if (i === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+          ctx.closePath(); ctx.stroke();
+        }
+      }
+      ctx.globalAlpha = 1;
+    }
+
+    function drawInterference() {
+      ctx.beginPath();
+      for (let family = 0; family < 2; family++) {
+        for (let base = -100; base < h + 100; base += 38) {
+          for (let x = -20; x <= w + 20; x += 12) {
+            const y = base + Math.sin(x * .008 + (family ? -t : t) * .4 + family * 1.8) * 55;
+            if (x === -20) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+          }
+        }
+      }
+      ctx.stroke();
+    }
+
+    const renderers = { waves: drawWaves, contours: drawContours,
+      lissajous: drawLissajous, hexagons: drawHexagons, interference: drawInterference };
+    function drawFrame() {
+      ctx.fillStyle = bgColor;
+      ctx.fillRect(0, 0, w, h);
+      ctx.strokeStyle = lineColor;
+      ctx.lineWidth = 2;
+      ctx.lineCap = 'round';
+      ctx.lineJoin = 'round';
+      renderers[settings.background]();
     }
 
     function animate() {

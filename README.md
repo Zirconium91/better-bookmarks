@@ -11,7 +11,8 @@ Better Bookmarks is a personal start page for organising bookmarks into movable 
 - **Movable sections:** drag a section heading or use its arrow buttons to change the card order.
 - **Automatic saving:** bookmarks, section order, and preferences persist in your browser.
 - **Light and dark themes:** switch themes and choose from nine accent colours.
-- **Animated wallpaper:** choose Slow, Medium, or Fast wave motion.
+- **Background patterns:** choose original waves, contour lines, Lissajous curves, a hexagonal lattice, or sine-wave interference in Settings.
+- **Animated wallpaper:** choose Slow, Medium, or Fast motion for any pattern.
 - **Optional dialog blur:** disable the blur effect in Settings.
 - **Web search:** search DuckDuckGo directly from the dashboard, or hide the search bar in Settings.
 - **Keyboard shortcut:** press `/` or `Ctrl+K` outside an input or dialog to focus search when the search bar is enabled.
@@ -53,7 +54,7 @@ Better Bookmarks stores data as JSON or text in the browser's `localStorage`:
 | --- | --- |
 | `dashboard-bookmarks-v2` | Bookmark names, URLs, and categories |
 | `dashboard-group-order-v1` | Section order |
-| `dashboard-settings-v1` | Wallpaper speed, accent colour, blur preference, and search-bar visibility |
+| `dashboard-settings-v1` | Background pattern, wallpaper speed, accent colour, blur preference, and search-bar visibility |
 | `theme` | Light or dark theme |
 
 Bookmarks are **not embedded in the HTML file**. Publishing this source code to GitHub does not upload the bookmarks you added through the interface. A new user's dashboard starts empty.
